@@ -1,0 +1,30 @@
+# The necessary packages are : 'Matrix' and 'Arules'
+# first, call the packages 
+library(Matrix)
+library(arules)
+
+#declarate the items
+data<-list(c("roti","susu","daging","buah"),
+           c("roti","popok","bir","daging"),
+           c("sosis","bir","popok"),
+           c("payung","bir","popok","sambal"),
+           c("payung","bir","jus","buah"))
+data
+
+#to see the number of transactions and items purchased
+data.tran<-as(data,"transactions")
+data.tran
+
+#to see class of data.tran in matrix and data frame
+class(data.tran)
+as(data.tran,"matrix")
+as(data.tran,"data.frame")
+
+#create plot of data.tran
+itemFrequencyPlot(data.tran,type="absolute")
+
+#Association RUles
+data.ap<-apriori(data.tran)
+inspect(head(sort(data.ap,by="support"),n=6))
+data.ap1<-apriori(data.tran,parameter=list(supp=0.4,maxlen=3))
+inspect(head(sort(data.ap1,by="support"),n=20))
